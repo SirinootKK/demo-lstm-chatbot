@@ -9,7 +9,6 @@ export default {
     extend: {
       fontFamily: {
         inter: ["Inter", "sans-serif"],
-        notoSansThai: ["Noto Sans Thai", "sans-serif"],
       },
       colors: {
         primary: "#242424",
@@ -17,8 +16,7 @@ export default {
         primaryDark: "#3A2D49",
         secondary: "#292929",
         secondaryLight: "#03DAC5",
-        purple: "#312A38 "
-
+        purple: "#312A38"
       }
     },
   },
