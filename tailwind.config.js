@@ -18,6 +18,7 @@ export default {
         secondaryLight: "#03DAC5",
         purple: "#312A38",
         lightPurple: "#BB86FC",
+        grayLight: "#AEAEB6",
       }
     },
   },

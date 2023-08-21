@@ -9,45 +9,45 @@
     font-family: "Inter", sans-serif;
   }
 
-  .vertical-scorllbar {
+  .vertical-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: theme("colors.transparent") theme("colors.primaryLight");
   }
 
   /* Chrome, Edge, and Safari */
-  .vertical-scorllbar::-webkit-scrollbar {
+  .vertical-scrollbar::-webkit-scrollbar {
     width: 10px;
   }
 
-  .vertical-scorllbar::-webkit-scrollbar-track {
+  .vertical-scrollbar::-webkit-scrollbar-track {
     background: theme("colors.transparent");
     border-radius: 5px;
   }
 
-  .vertical-scorllbar::-webkit-scrollbar-thumb {
+  .vertical-scrollbar::-webkit-scrollbar-thumb {
     background-color: theme("colors.primaryLight");
     border-radius: 14px;
     border: 3px solid theme("colors.transparent");
   }
 
-  .horizontal-scorllbar {
+  .horizontal-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: theme("colors.white") theme("colors.lightPurple");
   }
 
   /* Chrome, Edge, and Safari */
-  .horizontal-scorllbar::-webkit-scrollbar {
+  .horizontal-scrollbar::-webkit-scrollbar {
     height: 6px;
   }
 
-  .horizontal-scorllbar::-webkit-scrollbar-track {
-    background: theme("colors.transparent");
-    border-radius: 5px;
+  .horizontal-scrollbar::-webkit-scrollbar-track {
+    background: theme("colors.primary");
+    /* border-radius: 1px; */
   }
 
-  .horizontal-scorllbar::-webkit-scrollbar-thumb {
-    background-color: theme("colors.lightPurple");
-    /* border-radius: 14px; */
-    border: 3px solid theme("colors.transparent");
+  .horizontal-scrollbar::-webkit-scrollbar-thumb {
+    background-color: theme("colors.grayLight");
+    border-radius: 14px;
+    /* border: 1px solid theme("colors.primary"); */
   }
 }

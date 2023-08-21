@@ -1,3 +1,4 @@
 import userImg from "./userImg.png"
 import botImg from "./robot.png"
-export { botImg, userImg }
+import powerPuff from "./powerpuff_2.png"
+export { botImg, userImg, powerPuff }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Input } from "@material-tailwind/react";
-import { userImg, botImg } from "./images/index.js";
+import { userImg, botImg, powerPuff } from "./images/index.js";
 import SendIcon from "@mui/icons-material/Send";
 
 function ChatBox() {
@@ -34,30 +34,19 @@ function ChatBox() {
 
     const el = e.currentTarget;
 
-    if (
-      !(el.scrollLeft === 0 && e.deltaY < 0) &&
-      !(
-        el.scrollWidth - el.clientWidth - Math.round(el.scrollLeft) === 0 &&
-        e.deltaY > 0
-      )
-    ) {
-      e.preventDefault();
-    }
-
     el.scrollTo({
       left: el.scrollLeft + e.deltaY,
       behavior: strength > 70 ? "auto" : "smooth",
     });
   };
 
-  const handleExampleClick = (example) => {
-    setUserMessage(example);
+  const handleExampleClick = (e) => {
+    setUserMessage(e);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userMessage) return;
-
     setUserMessage("");
     setIsLoading(true);
 
@@ -88,7 +77,7 @@ function ChatBox() {
   };
   return (
     <div className="flex justify-center items-center h-screen w-screen bg-primary">
-      <div className="w-full max-w-5xl h-full md:m-4 md:h-5/6 bg-secondary md:rounded-xl shadow-xl flex flex-col">
+      <div className="w-full max-w-5xl h-full md:m-4 md:h-[90vh] bg-secondary md:rounded-xl shadow-xl flex flex-col">
         <h1 className="text-center font-semibold text-secondaryLight mb-4 mt-5 text-lg h-16 flex items-center justify-center">
           {isLoading ? (
             <h1 className="text-lightPurple">Loading...</h1>
@@ -98,9 +87,14 @@ function ChatBox() {
         </h1>
         <div className="h-[2px] bg-primary border-0 w-full shadow-xl" />
         <div
-          className="flex-grow overflow-auto vertical-scorllbar h-full"
+          className="flex-grow overflow-auto vertical-scrollbar h-full"
           ref={chatContainerRef}
         >
+          {botResponses.length === 0 && !userMessage && (
+            <div className="flex flex-col justify-center items-center h-full">
+              <img src={powerPuff} className="opacity-40 w-[550px] h-full" />
+            </div>
+          )}
           {botResponses.map((response, index) => (
             <div
               key={index}
@@ -118,19 +112,28 @@ function ChatBox() {
           ))}
         </div>
         <ul
-          className="flex h-28 pl-6 w-full horizontal-scorllbar overflow-x-scroll sm:overflow-x-hidden hover:overflow-x-scroll overflow-y-hidden items-center gap-x-2 select-none"
-          onWheel={handleScroll}
+          className={`flex h-[85px] px-8 w-full overflow-y-hidden items-center gap-x-2 select-none ${
+            !isLoading
+              ? "horizontal-scrollbar overflow-x-scroll sm:overflow-x-hidden hover:overflow-x-scroll"
+              : "overflow-x-hidden"
+          }`}
+          onWheel={!isLoading ? (e) => handleScroll(e) : undefined}
         >
           {examples.map((example, index) => (
             <h1
               key={index}
-              onClick={() => handleExampleClick(example)}
-              className="bg-primaryLight whitespace-nowrap text-white text-sm p-2 rounded-md flex items-center flex-nowrap w-full h-fit"
+              className={`bg-primaryLight bg-opacity-50 whitespace-nowrap text-white text-sm py-2 px-4 rounded-xl flex items-center flex-nowrap w-full h-fit cursor-pointer ${
+                !isLoading ? "hover:bg-secondaryLight hover:bg-opacity-50" : ""
+              }`}
+              onClick={
+                !isLoading ? () => handleExampleClick(example) : undefined
+              }
             >
               {example}
             </h1>
           ))}
         </ul>
+
         <div className="h-28 w-full flex items-center bg pb-2">
           <form
             onSubmit={handleSubmit}
