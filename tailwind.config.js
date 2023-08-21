@@ -16,7 +16,8 @@ export default {
         primaryDark: "#3A2D49",
         secondary: "#292929",
         secondaryLight: "#03DAC5",
-        purple: "#312A38"
+        purple: "#312A38",
+        lightPurple: "#BB86FC",
       }
     },
   },

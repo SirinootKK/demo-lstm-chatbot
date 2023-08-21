@@ -90,7 +90,11 @@ function ChatBox() {
     <div className="flex justify-center items-center h-screen w-screen bg-primary">
       <div className="w-full max-w-5xl h-full md:m-4 md:h-5/6 bg-secondary md:rounded-xl shadow-xl flex flex-col">
         <h1 className="text-center font-semibold text-secondaryLight mb-4 mt-5 text-lg h-16 flex items-center justify-center">
-          {isLoading ? "Loading..." : "ChatLSTM"}
+          {isLoading ? (
+            <h1 className="text-lightPurple">Loading...</h1>
+          ) : (
+            "ChatLSTM"
+          )}
         </h1>
         <div className="h-[2px] bg-primary border-0 w-full shadow-xl" />
         <div
@@ -114,8 +118,7 @@ function ChatBox() {
           ))}
         </div>
         <ul
-          className="flex h-28 pl-6 w-full horizontal-scorllbar overflow-x-hidden overflow-y-hidden items-center gap-x-2 bg-slate-300 select-none"
-          onDrag={handleScroll}
+          className="flex h-28 pl-6 w-full horizontal-scorllbar overflow-x-scroll sm:overflow-x-hidden hover:overflow-x-scroll overflow-y-hidden items-center gap-x-2 select-none"
           onWheel={handleScroll}
         >
           {examples.map((example, index) => (
@@ -128,7 +131,7 @@ function ChatBox() {
             </h1>
           ))}
         </ul>
-        <div className="h-28 w-full flex items-center bg bg-red-400 pb-2">
+        <div className="h-28 w-full flex items-center bg pb-2">
           <form
             onSubmit={handleSubmit}
             className="flex w-full h-fit relative px-12"

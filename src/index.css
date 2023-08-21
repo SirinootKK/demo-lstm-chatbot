@@ -32,12 +32,12 @@
 
   .horizontal-scorllbar {
     scrollbar-width: thin;
-    scrollbar-color: theme("colors.white") theme("colors.black");
+    scrollbar-color: theme("colors.white") theme("colors.lightPurple");
   }
 
   /* Chrome, Edge, and Safari */
   .horizontal-scorllbar::-webkit-scrollbar {
-    height: 10px;
+    height: 6px;
   }
 
   .horizontal-scorllbar::-webkit-scrollbar-track {
@@ -46,8 +46,8 @@
   }
 
   .horizontal-scorllbar::-webkit-scrollbar-thumb {
-    background-color: theme("colors.primaryLight");
-    border-radius: 14px;
+    background-color: theme("colors.lightPurple");
+    /* border-radius: 14px; */
     border: 3px solid theme("colors.transparent");
   }
 }
