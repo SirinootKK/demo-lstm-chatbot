@@ -92,7 +92,7 @@ function ChatBox() {
         >
           {botResponses.length === 0 && !userMessage && (
             <div className="flex flex-col justify-center items-center h-full">
-              <img src={powerPuff} className="opacity-40 w-[550px] h-full" />
+              <img src={powerPuff} className="opacity-40 w-fit h-full" />
             </div>
           )}
           {botResponses.map((response, index) => (
