@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Input } from "@material-tailwind/react";
-import { userImg, botImg, powerPuff } from "./images/index.js";
+import { userImg, botImg } from "./images/index.js";
 import SendIcon from "@mui/icons-material/Send";
 
 function ChatBox() {
@@ -10,10 +10,10 @@ function ChatBox() {
   const [examples] = useState([
     "NCX ครอบคลุมแหล่งข้อมูลอะไรบ้าง",
     "จุดเด่นของหน้า Dashboard ของ IQ360 Basic คืออะไร",
-    "บริการของบริษัทมีอะไรบ้าง",
-    "สัญญาจ้างขั้นต่ำกี่เดือน",
-    "สัญญาการรับบริการขั้นต่ำกี่เดือน",
-    "รับทำ Crisis หรือไม่",
+    "NCX ครอบคลุมแหล่งอะไร",
+    "ที่อยู่บริษัท",
+    "บริษัทฯ ให้บริการอะไรบ้าง",
+    "DXT360 มีข้อมูลจากแหล่งข้อมูลอะไรบ้าง",
     "มีบริการฐานข้อมูลราคาพิเศษสำหรับนักศึกษาเพื่อใช้ทำวิจัยหรือไม่",
     "Page Rank ของ Online Media คืออะไร",
   ]);
@@ -92,7 +92,13 @@ function ChatBox() {
         >
           {botResponses.length === 0 && !userMessage && (
             <div className="flex flex-col justify-center items-center h-full">
-              <img src={powerPuff} className="opacity-40 w-fit h-full" />
+              {/* <img
+                src={powerPuff}
+                className="opacity-40 w-fit h-[350px] 2xl:h-[600px]"
+              /> */}
+              <h1 className="text-gray-500 opacity-60 text-2xl">
+                Welcome to ChatLSTM
+              </h1>
             </div>
           )}
           {botResponses.map((response, index) => (
