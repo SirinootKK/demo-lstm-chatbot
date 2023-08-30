@@ -8,7 +8,7 @@ function ChatBox() {
   const [isLoading, setIsLoading] = useState(false);
   const [botResponses, setBotResponses] = useState([]);
   const [examples] = useState([
-    "NCX ครอบคลุมแหล่งข้อมูลอะไรบ้าง",
+    "มีข้อมูลสำหรับนิสิตปริญญาตรีในการทำการวิจัยหรือเปล่า",
     "จุดเด่นของหน้า Dashboard ของ IQ360 Basic คืออะไร",
     "NCX ครอบคลุมแหล่งอะไร",
     "ที่อยู่บริษัท",
