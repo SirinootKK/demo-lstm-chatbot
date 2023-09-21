@@ -71,7 +71,6 @@ function ChatBox() {
       default:
         apiEndpoint = "/api/get_response";
     }
-
     const userMessageData = { message: userMessage, isUserMessage: true };
     setBotResponses((prevResponses) => [...prevResponses, userMessageData]);
 
