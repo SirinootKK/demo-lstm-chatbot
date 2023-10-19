@@ -56,7 +56,7 @@ function ChatBox() {
     ]);
 
     try {
-      const response = await fetch("/api/get_response", {
+      const response = await fetch("/api/get_response_mde", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -83,7 +83,7 @@ function ChatBox() {
           {isLoading ? (
             <h1 className="text-lightPurple">Loading...</h1>
           ) : (
-            "ChatLSTM"
+            "ChatmDeBERTa"
           )}
         </h1>
         <div className="h-[2px] bg-primary border-0 w-full shadow-xl" />
