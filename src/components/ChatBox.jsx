@@ -9,9 +9,9 @@ function ChatBox() {
   const [botResponses, setBotResponses] = useState([]);
   const [examples] = useState([
     "NCX ครอบคลุมแหล่งข้อมูลอะไรบ้าง",
-    "จุดเด่นของหน้า Dashboard ของ IQ360 Basic คืออะไร",
     "NCX ครอบคลุมแหล่งอะไร",
-    "ที่อยู่บริษัท",
+    "ระบบไม่สามารถเข้าใช้งานได้",
+    "ระบบใช้งานไม่ได้",
     "บริษัทฯ ให้บริการอะไรบ้าง",
     "DXT360 มีข้อมูลจากแหล่งข้อมูลอะไรบ้าง",
     "มีบริการฐานข้อมูลราคาพิเศษสำหรับนักศึกษาเพื่อใช้ทำวิจัยหรือไม่",
@@ -44,6 +44,39 @@ function ChatBox() {
     setUserMessage(e);
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!userMessage) return;
+  //   setUserMessage("");
+  //   setIsLoading(true);
+
+  //   setBotResponses((prevResponses) => [
+  //     ...prevResponses,
+  //     { message: userMessage, isUserMessage: true },
+  //   ]);
+
+  //   try {
+  //     const response = await fetch("/api/get_response_mde", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ message: userMessage }),
+  //     });
+  //     const data = await response.json();
+
+  //     setBotResponses((prevResponses) => [
+  //       ...prevResponses,
+  //       { message: data.response, isUserMessage: false },
+  //     ]);
+  //   } catch (error) {
+  //     console.error("Error fetching response:", error);
+  //     window.alert("Server error. Please try again later.");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userMessage) return;
@@ -65,9 +98,16 @@ function ChatBox() {
       });
       const data = await response.json();
 
+      console.log("API Response:", data);
+
       setBotResponses((prevResponses) => [
         ...prevResponses,
-        { message: data.response, isUserMessage: false },
+        {
+          message: data.response,
+          isUserMessage: false,
+          simitar_context: data.simitar_context,
+          probability: data.probability,
+        },
       ]);
     } catch (error) {
       console.error("Error fetching response:", error);
@@ -76,10 +116,11 @@ function ChatBox() {
       setIsLoading(false);
     }
   };
+
   return (
-    <div className="flex justify-center items-center h-screen w-screen bg-primary">
-      <div className="w-full max-w-5xl h-full md:m-4 md:h-[90vh] bg-secondary md:rounded-xl shadow-xl flex flex-col">
-        <h1 className="text-center font-semibold text-secondaryLight mb-4 mt-5 text-lg h-16 flex items-center justify-center">
+    <div className="flex flex-col justify-center items-center h-full w-full bg-primary">
+      <div className="w-full max-w-5xl h-full md:m-2 md:h-[70vh] bg-secondary md:rounded-xl shadow-xl flex flex-col flex-shrink-0">
+        <h1 className="text-center font-semibold text-secondaryLight mb-2 mt-3 text-lg h-16 flex items-center justify-center">
           {isLoading ? (
             <h1 className="text-lightPurple">Loading...</h1>
           ) : (
@@ -110,7 +151,16 @@ function ChatBox() {
                 className="object-cover h-[48px] w-[48px]"
                 alt={response.isUserMessage ? "User" : "Bot"}
               />
-              <div className="px-4">{response.message}</div>
+              <div className="px-4">
+                {response.message}
+                <div className="text-sm">
+                  {response.probability && (
+                    <p className="text-xs mt-1">
+                      Probability = {response.probability}
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -159,6 +209,33 @@ function ChatBox() {
             </button>
           </form>
         </div>
+      </div>
+      <div className="w-full max-w-5xl h-full md:m- md:h-[35vh] bg-secondary md:rounded-xl shadow-xl overflow-auto vertical-scrollbar">
+        {botResponses.map((response, index) => (
+          <div
+            key={index}
+            className={
+              "flex flex-col items-start px-[40px] md:px-[72px] py-1 text-white"
+            }
+          >
+            {response.simitar_context &&
+              response.simitar_context.map((item, idx) => (
+                <div
+                  key={idx}
+                  className={`pt-2 ${
+                    item.includes("          ") ? "mb-2" : ""
+                  }`}
+                >
+                  {item.split(/\s{2,}/).map((line, i) => (
+                    <p key={i}>{line}</p>
+                  ))}
+                </div>
+              ))}
+            {response.simitar_context && (
+              <div className="h-[1px] bg-white border-0 w-full shadow-xl" />
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
