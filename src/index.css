@@ -11,6 +11,10 @@
     font-family: "Inter", sans-serif;
   }
 
+  html {
+    background: #242424;
+  }
+
   .vertical-scrollbar {
     scrollbar-width: thin;
     scrollbar-color: theme("colors.transparent") theme("colors.primaryLight");

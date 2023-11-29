@@ -88,9 +88,9 @@ function ChatBox() {
 
   return (
     //flex flex-row justify-center items-center
-    <div className="h-[100vh] w-full max-w-10xl bg-primary flex p-2">
+    <div className="h-[100dvh] w-full overflow-hidden bg-primary flex p-4">
       {/* max-w-5xl md:h-[98vh]  w-[120vh] h-full*/}
-      <div className="w-[120vh] h-[97vh] bg-secondary md:rounded-xl shadow-xl flex flex-col">
+      <div className="w-full max-w-3xl h-[95dvh] bg-secondary md:rounded-xl shadow-xl flex flex-col">
         <h1 className="text-center font-semibold text-secondaryLight mb-2 mt-3 text-lg h-16 flex items-center justify-center">
           {isLoading ? (
             <h1 className="text-lightPurple">Loading...</h1>
@@ -116,7 +116,7 @@ function ChatBox() {
         <div className="h-28 w-full flex items-center bg pb-2">
           <form
             onSubmit={handleSubmit}
-            className="flex w-full h-fit relative px-12"
+            className="flex w-full h-fit relative px-6 md:px-12"
           >
             <Input
               type="text"
@@ -138,7 +138,7 @@ function ChatBox() {
         </div>
       </div>
 
-      <div className="w-full max-w-5xl ml-1 h-[97vh] bg-secondary md:rounded-xl shadow-xl overflow-auto vertical-scrollbar flex-1">
+      <div className="w-full max-w-5xl ml-1 h-[95dvh] bg-secondary md:rounded-xl shadow-xl overflow-auto vertical-scrollbar flex-1">
         <h1 className="text-center text-secondaryLight text-lg h-16 flex items-center justify-center">
           คู่ถาม-ตอบ
         </h1>
