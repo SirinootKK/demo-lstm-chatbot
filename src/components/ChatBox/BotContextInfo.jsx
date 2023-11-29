@@ -6,7 +6,7 @@ function BotContextInfo({ response }) {
         response.simitar_context.map((item, idx) => (
           <div
             key={idx}
-            className={`pt-2 ${item.includes("          ") ? "mb-5" : ""}`}
+            className={`pt-2 ${item.includes("          ") ? "mb-2" : ""}`}
           >
             {item.split(/\s{2,}/).map((line, i) => (
               <p key={i}>{line}</p>
