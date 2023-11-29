@@ -88,7 +88,7 @@ function ChatBox() {
 
   return (
     //flex flex-row justify-center items-center
-    <div className="h-[100vh] w-full max-w-10xl bg-primary flex">
+    <div className="h-[100vh] w-full max-w-10xl bg-primary flex p-2">
       {/* max-w-5xl md:h-[98vh]  w-[120vh] h-full*/}
       <div className="w-[120vh] h-[97vh] bg-secondary md:rounded-xl shadow-xl flex flex-col">
         <h1 className="text-center font-semibold text-secondaryLight mb-2 mt-3 text-lg h-16 flex items-center justify-center">
@@ -139,6 +139,10 @@ function ChatBox() {
       </div>
 
       <div className="w-full max-w-5xl ml-1 h-[97vh] bg-secondary md:rounded-xl shadow-xl overflow-auto vertical-scrollbar flex-1">
+        <h1 className="text-center text-secondaryLight text-lg h-16 flex items-center justify-center">
+          คู่ถาม-ตอบ
+        </h1>
+        <div className="h-[2px] bg-primary border-0 w-full shadow-xl" />
         {botResponses.map((response, index) => (
           <BotContextInfo key={index} response={response} />
         ))}
