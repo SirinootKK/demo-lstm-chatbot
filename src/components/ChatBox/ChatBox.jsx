@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Input } from "@material-tailwind/react";
 import SendIcon from "@mui/icons-material/Send";
-import ChatMessages from "./ChatMessage.jsx";
+import ChatMessages from "./ChatMessages.jsx";
 import ExampleList from "./ExampleList.jsx";
 import BotContextInfo from "./BotContextInfo.jsx";
 
@@ -23,7 +23,6 @@ function ChatBox() {
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
-    // Effect สำหรับ scroll ลงมาด้านล่างของ chat container
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
@@ -31,7 +30,6 @@ function ChatBox() {
   }, [botResponses]);
 
   const handleScroll = (e) => {
-    // Function สำหรับ handle scrolling
     const strength = Math.abs(e.deltaY);
 
     if (e.deltaY === 0) return;
@@ -45,12 +43,10 @@ function ChatBox() {
   };
 
   const handleExampleClick = (e) => {
-    // Function สำหรับ handle click ที่ตัวอย่าง
     setUserMessage(e);
   };
 
   const handleSubmit = async (e) => {
-    // Function สำหรับ handle submit form
     e.preventDefault();
     if (!userMessage) return;
     setUserMessage("");
@@ -79,7 +75,7 @@ function ChatBox() {
           message: data.response,
           isUserMessage: false,
           simitar_context: data.simitar_context,
-          probability: data.probability,
+          distance: data.distance,
         },
       ]);
     } catch (error) {
@@ -91,9 +87,10 @@ function ChatBox() {
   };
 
   return (
-    <div className="flex flex-row justify-center items-center h-full w-full bg-primary">
-      <div className="w-full max-w-5xl h-full md:m-2 md:h-[70vh] bg-secondary md:rounded-xl shadow-xl flex flex-col flex-shrink-0">
-        {/* ... ส่วนหัว ChatBox */}
+    //flex flex-row justify-center items-center
+    <div className="h-[100vh] w-full max-w-10xl bg-primary flex">
+      {/* max-w-5xl md:h-[98vh]  w-[120vh] h-full*/}
+      <div className="w-[120vh] h-[97vh] bg-secondary md:rounded-xl shadow-xl flex flex-col">
         <h1 className="text-center font-semibold text-secondaryLight mb-2 mt-3 text-lg h-16 flex items-center justify-center">
           {isLoading ? (
             <h1 className="text-lightPurple">Loading...</h1>
@@ -103,14 +100,12 @@ function ChatBox() {
         </h1>
         <div className="h-[2px] bg-primary border-0 w-full shadow-xl" />
 
-        {/* ส่วนของ Chat Messages */}
         <ChatMessages
           botResponses={botResponses}
           chatContainerRef={chatContainerRef}
           userMessage={userMessage}
         />
 
-        {/* ส่วนของรายการตัวอย่าง */}
         <ExampleList
           examples={examples}
           isLoading={isLoading}
@@ -118,7 +113,6 @@ function ChatBox() {
           handleScroll={handleScroll}
         />
 
-        {/* ส่วนของ input form และ button submit */}
         <div className="h-28 w-full flex items-center bg pb-2">
           <form
             onSubmit={handleSubmit}
@@ -133,7 +127,6 @@ function ChatBox() {
               disabled={isLoading}
             />
 
-            {/* Button สำหรับ submit ข้อความ */}
             <button
               type="submit"
               className="z-20 w-fit h-fit text-secondaryLight absolute right-16 top-1/2 -translate-y-1/2"
@@ -145,8 +138,7 @@ function ChatBox() {
         </div>
       </div>
 
-      {/* ส่วนของ Bot Context Information */}
-      <div className="w-full max-w-5xl h-full md:m- md:h-[40vh] bg-secondary md:rounded-xl shadow-xl overflow-auto vertical-scrollbar">
+      <div className="w-full max-w-5xl ml-1 h-[97vh] bg-secondary md:rounded-xl shadow-xl overflow-auto vertical-scrollbar flex-1">
         {botResponses.map((response, index) => (
           <BotContextInfo key={index} response={response} />
         ))}

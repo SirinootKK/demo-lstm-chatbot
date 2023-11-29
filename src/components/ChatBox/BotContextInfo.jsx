@@ -1,6 +1,3 @@
-// components/ChatBox/BotContextInfo.jsx
-import React from "react";
-
 function BotContextInfo({ response }) {
   return (
     <div className="flex flex-col items-start px-[40px] md:px-[72px] py-1 text-white">

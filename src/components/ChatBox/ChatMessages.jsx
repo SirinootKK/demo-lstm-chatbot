@@ -1,4 +1,4 @@
-// components/ChatBox/ChatMessages.jsx
+/* eslint-disable react/prop-types */
 import { userImg, botImg } from "./images/index";
 
 function ChatMessages({ botResponses, chatContainerRef, userMessage }) {
@@ -29,10 +29,8 @@ function ChatMessages({ botResponses, chatContainerRef, userMessage }) {
           <div className="px-4">
             {response.message}
             <div className="text-sm">
-              {response.probability && (
-                <p className="text-xs mt-1">
-                  Probability = {response.probability}
-                </p>
+              {response.distance && (
+                <p className="text-xs mt-1">confident = {response.distance}</p>
               )}
             </div>
           </div>
@@ -41,5 +39,4 @@ function ChatMessages({ botResponses, chatContainerRef, userMessage }) {
     </div>
   );
 }
-
 export default ChatMessages;
