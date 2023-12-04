@@ -1,7 +1,16 @@
 /* eslint-disable react/prop-types */
 import { userImg, botImg } from "./images/index";
 
-function ChatMessages({ botResponses, chatContainerRef, userMessage }) {
+function ChatMessages({
+  botResponses,
+  chatContainerRef,
+  userMessage,
+  selectedChatType,
+}) {
+  const welcomeMessage =
+    selectedChatType === "ChatmDeBERTa"
+      ? "Welcome to ChatmDeBERTa"
+      : "Welcome to ChatWangchanBERTa";
   return (
     <div
       className="flex-grow overflow-auto vertical-scrollbar h-full"
@@ -10,7 +19,7 @@ function ChatMessages({ botResponses, chatContainerRef, userMessage }) {
       {botResponses.length === 0 && !userMessage && (
         <div className="flex flex-col justify-center items-center h-full">
           <h1 className="text-gray-500 opacity-60 text-2xl">
-            Welcome to ChatmDeBERTa
+            {welcomeMessage}
           </h1>
         </div>
       )}

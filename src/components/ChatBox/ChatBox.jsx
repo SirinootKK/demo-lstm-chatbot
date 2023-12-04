@@ -9,6 +9,7 @@ function ChatBox() {
   const [userMessage, setUserMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [botResponses, setBotResponses] = useState([]);
+  const [selectedChatType, setSelectedChatType] = useState("ChatmDeBERTa");
   const [examples] = useState([
     "NCX ครอบคลุมแหล่งข้อมูลอะไรบ้าง",
     "NCX ครอบคลุมแหล่งอะไร",
@@ -28,6 +29,11 @@ function ChatBox() {
         chatContainerRef.current.scrollHeight;
     }
   }, [botResponses]);
+
+  const handleChatTypeChange = (e) => {
+    setUserMessage("");
+    setSelectedChatType(e);
+  };
 
   const handleScroll = (e) => {
     const strength = Math.abs(e.deltaY);
@@ -49,8 +55,13 @@ function ChatBox() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userMessage) return;
-    setUserMessage("");
     setIsLoading(true);
+
+    // API endpoint based on selected chat type
+    const apiEndpoint =
+      selectedChatType === "ChatmDeBERTa"
+        ? "/api/get_response_mde"
+        : "/api/get_response_wc";
 
     setBotResponses((prevResponses) => [
       ...prevResponses,
@@ -58,7 +69,7 @@ function ChatBox() {
     ]);
 
     try {
-      const response = await fetch("/api/get_response_mde", {
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,24 +97,85 @@ function ChatBox() {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!userMessage) return;
+  //   setUserMessage("");
+  //   setIsLoading(true);
+
+  //   setBotResponses((prevResponses) => [
+  //     ...prevResponses,
+  //     { message: userMessage, isUserMessage: true },
+  //   ]);
+
+  //   try {
+  //     const response = await fetch("/api/get_response_mde", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ message: userMessage }),
+  //     });
+  //     const data = await response.json();
+
+  //     console.log("API Response:", data);
+
+  //     setBotResponses((prevResponses) => [
+  //       ...prevResponses,
+  //       {
+  //         message: data.response,
+  //         isUserMessage: false,
+  //         simitar_context: data.simitar_context,
+  //         distance: data.distance,
+  //       },
+  //     ]);
+  //   } catch (error) {
+  //     console.error("Error fetching response:", error);
+  //     window.alert("Server error. Please try again later.");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   return (
-    //flex flex-row justify-center items-center
-    <div className="h-[100dvh] w-full overflow-hidden bg-primary flex p-4">
-      {/* max-w-5xl md:h-[98vh]  w-[120vh] h-full*/}
-      <div className="w-full max-w-3xl h-[95dvh] bg-secondary md:rounded-xl shadow-xl flex flex-col">
-        <h1 className="text-center font-semibold text-secondaryLight mb-2 mt-3 text-lg h-16 flex items-center justify-center">
+    <div className="h-[100dvh] w-full overflow-hidden bg-primary flex p-4 justify-center items-center">
+      <div className="w-full md:max-w-5xl max-w-4xl h-[95dvh] bg-secondary md:rounded-xl rounded-lg shadow-xl flex flex-col">
+        {/* <h1 className="text-center font-semibold text-secondaryLight mb-2 mt-3 text-lg h-16 flex items-center justify-center">
           {isLoading ? (
             <h1 className="text-lightPurple">Loading...</h1>
           ) : (
             "ChatmDeBERTa"
           )}
-        </h1>
+        </h1> */}
+        <div className="flex justify-center items-center mb-3">
+          <button
+            className={`${
+              selectedChatType === "ChatmDeBERTa"
+                ? "bg-primaryLight text-white"
+                : "text-secondaryLight"
+            } font-semibold text-lg h-16 flex items-center justify-center p-2 mr-4 rounded-lg`}
+            onClick={() => handleChatTypeChange("ChatmDeBERTa")}
+          >
+            ChatmDeBERTa
+          </button>
+          <button
+            className={`${
+              selectedChatType === "ChatWangchanBERTa"
+                ? "bg-primaryLight text-white"
+                : "text-secondaryLight"
+            } font-semibold text-lg h-16 flex items-center justify-center p-2 rounded-lg`}
+            onClick={() => handleChatTypeChange("ChatWangchanBERTa")}
+          >
+            ChatWangchanBERTa
+          </button>
+        </div>
         <div className="h-[2px] bg-primary border-0 w-full shadow-xl" />
 
         <ChatMessages
           botResponses={botResponses}
           chatContainerRef={chatContainerRef}
           userMessage={userMessage}
+          selectedChatType={selectedChatType}
         />
 
         <ExampleList
