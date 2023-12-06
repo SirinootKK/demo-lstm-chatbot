@@ -58,7 +58,6 @@ function ChatBox() {
     if (!userMessage) return;
     setIsLoading(true);
 
-    // API endpoint based on selected chat type
     const apiEndpoint =
       selectedChatType === "ChatmDeBERTa"
         ? "/api/get_response_mde"
@@ -179,6 +178,7 @@ function ChatBox() {
         {botResponses.map((response, index) => (
           <BotContextInfo key={index} response={response} />
         ))}
+        dsds
       </div>
     </div>
   );
