@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { Input } from "@material-tailwind/react";
 import SendIcon from "@mui/icons-material/Send";
@@ -10,6 +11,8 @@ function ChatBox() {
   const [isLoading, setIsLoading] = useState(false);
   const [botResponses, setBotResponses] = useState([]);
   const [selectedChatType, setSelectedChatType] = useState("ChatmDeBERTa");
+  const chatContainerRef = useRef(null);
+
   const [examples] = useState([
     "NCX ครอบคลุมแหล่งข้อมูลอะไรบ้าง",
     "NCX ครอบคลุมแหล่งอะไร",
@@ -20,8 +23,6 @@ function ChatBox() {
     "มีบริการฐานข้อมูลราคาพิเศษสำหรับนักศึกษาเพื่อใช้ทำวิจัยหรือไม่",
     "Page Rank ของ Online Media คืออะไร",
   ]);
-
-  const chatContainerRef = useRef(null);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -97,46 +98,6 @@ function ChatBox() {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!userMessage) return;
-  //   setUserMessage("");
-  //   setIsLoading(true);
-
-  //   setBotResponses((prevResponses) => [
-  //     ...prevResponses,
-  //     { message: userMessage, isUserMessage: true },
-  //   ]);
-
-  //   try {
-  //     const response = await fetch("/api/get_response_mde", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ message: userMessage }),
-  //     });
-  //     const data = await response.json();
-
-  //     console.log("API Response:", data);
-
-  //     setBotResponses((prevResponses) => [
-  //       ...prevResponses,
-  //       {
-  //         message: data.response,
-  //         isUserMessage: false,
-  //         simitar_context: data.simitar_context,
-  //         distance: data.distance,
-  //       },
-  //     ]);
-  //   } catch (error) {
-  //     console.error("Error fetching response:", error);
-  //     window.alert("Server error. Please try again later.");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   return (
     <div className="h-[100dvh] w-full overflow-hidden bg-primary flex p-4 justify-center items-center">
       <div className="w-full md:max-w-5xl max-w-4xl h-[95dvh] bg-secondary md:rounded-xl rounded-lg shadow-xl flex flex-col">
@@ -147,7 +108,7 @@ function ChatBox() {
             "ChatmDeBERTa"
           )}
         </h1> */}
-        <div className="flex justify-center items-center mb-3">
+        <div className="flex justify-center items-center">
           <button
             className={`${
               selectedChatType === "ChatmDeBERTa"
