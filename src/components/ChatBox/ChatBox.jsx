@@ -79,6 +79,7 @@ function ChatBox() {
       const data = await response.json();
 
       console.log("API Response:", data);
+      console.log("sim context", <data className="simitar_context"></data>);
 
       setBotResponses((prevResponses) => [
         ...prevResponses,
@@ -178,7 +179,6 @@ function ChatBox() {
         {botResponses.map((response, index) => (
           <BotContextInfo key={index} response={response} />
         ))}
-        dsds
       </div>
     </div>
   );
