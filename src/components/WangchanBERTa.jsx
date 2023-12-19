@@ -5,12 +5,13 @@ import SendIcon from "@mui/icons-material/Send";
 import ChatMessages from "./ChatMessages.jsx";
 import ExampleList from "./ExampleList.jsx";
 import BotContextInfo from "./BotContextInfo.jsx";
+import Navbar from "./Navbar.jsx";
 
 function ChatBox() {
   const [userMessage, setUserMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [botResponses, setBotResponses] = useState([]);
-  const [selectedChatType, setSelectedChatType] = useState("ChatmDeBERTa");
+  const [selectedChatType, setSelectedChatType] = useState("ChatWangchanBERTa");
   const chatContainerRef = useRef(null);
 
   const [examples] = useState([
@@ -31,9 +32,19 @@ function ChatBox() {
     }
   }, [botResponses]);
 
-  const handleChatTypeChange = (e) => {
+  // const handleChatTypeChange = (e) => {
+  //   setUserMessage("");
+  //   setSelectedChatType(e);
+  // };
+  const handleChatTypeChange = (chatType) => {
     setUserMessage("");
-    setSelectedChatType(e);
+    setSelectedChatType(chatType);
+
+    if (chatType === "ChatmDeBERTa") {
+      window.location.href = "/chatmdeberta";
+    } else if (chatType === "ChatWangchanBERTa") {
+      window.location.href = "/wangchanberta";
+    }
   };
 
   const handleScroll = (e) => {
@@ -58,10 +69,7 @@ function ChatBox() {
     if (!userMessage) return;
     setIsLoading(true);
 
-    const apiEndpoint =
-      selectedChatType === "ChatmDeBERTa"
-        ? "/api/get_response_mde"
-        : "/api/get_response_wc";
+    const apiEndpoint = "/api/get_response_wc";
 
     setBotResponses((prevResponses) => [
       ...prevResponses,
@@ -88,6 +96,7 @@ function ChatBox() {
           isUserMessage: false,
           simitar_context: data.simitar_context,
           distance: data.distance,
+          allDistance: data.distances,
         },
       ]);
     } catch (error) {
@@ -102,13 +111,13 @@ function ChatBox() {
     <div className="h-[100dvh] w-full overflow-hidden bg-primary flex p-4 justify-center items-center">
       <div className="w-full md:max-w-5xl max-w-4xl h-[95dvh] bg-secondary md:rounded-xl rounded-lg shadow-xl flex flex-col">
         {/* <h1 className="text-center font-semibold text-secondaryLight mb-2 mt-3 text-lg h-16 flex items-center justify-center">
-          {isLoading ? (
+          {isLoading ? 
             <h1 className="text-lightPurple">Loading...</h1>
           ) : (
             "ChatmDeBERTa"
           )}
         </h1> */}
-        <div className="flex justify-center items-center">
+        {/* <div className="flex justify-center items-center">
           <button
             className={`${
               selectedChatType === "ChatmDeBERTa"
@@ -130,7 +139,11 @@ function ChatBox() {
             ChatWangchanBERTa
           </button>
         </div>
-        <div className="h-[2px] bg-primary border-0 w-full shadow-xl" />
+        <div className="h-[2px] bg-primary border-0 w-full shadow-xl" /> */}
+        <Navbar
+          selectedChatType={selectedChatType}
+          handleChatTypeChange={handleChatTypeChange}
+        />
 
         <ChatMessages
           botResponses={botResponses}
