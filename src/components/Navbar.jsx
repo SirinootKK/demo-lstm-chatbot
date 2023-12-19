@@ -16,7 +16,7 @@ function Navbar({ selectedChatType, handleChatTypeChange }) {
         ChatmDeBERTa
       </Link>
       <Link
-        to="/wangchanberta"
+        to="/chatwangchanberta"
         className={`${
           selectedChatType === "ChatWangchanBERTa"
             ? "bg-primaryLight text-white"

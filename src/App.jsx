@@ -11,10 +11,15 @@ import WangchanBERTa from "./components/WangchanBERTa.jsx";
 function App() {
   return (
     <Router>
+      {/* <Routes>
+        <Route path="/" element={<Navigate to="/chatmdeberta" replace />} />
+        <Route path="/chatmdeberta" element={<ChatBox />} />
+        <Route path="/chatwangchanberta" element={<WangchanBERTa />} />
+      </Routes> */}
       <Routes>
         <Route path="/" element={<Navigate to="/chatmdeberta" replace />} />
         <Route path="/chatmdeberta" element={<ChatBox />} />
-        <Route path="/wangchanberta" element={<WangchanBERTa />} />
+        <Route path="/chatwangchanberta" element={<WangchanBERTa />} />
       </Routes>
     </Router>
   );

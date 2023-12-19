@@ -4,7 +4,7 @@ import { Input } from "@material-tailwind/react";
 import SendIcon from "@mui/icons-material/Send";
 import ChatMessages from "./ChatMessages.jsx";
 import ExampleList from "./ExampleList.jsx";
-import BotContextInfo from "./BotContextInfo.jsx";
+import TopResponsesSection from "./TopResponsesSection.jsx";
 import Navbar from "./Navbar.jsx";
 
 function ChatBox() {
@@ -32,10 +32,6 @@ function ChatBox() {
     }
   }, [botResponses]);
 
-  // const handleChatTypeChange = (e) => {
-  //   setUserMessage("");
-  //   setSelectedChatType(e);
-  // };
   const handleChatTypeChange = (chatType) => {
     setUserMessage("");
     setSelectedChatType(chatType);
@@ -43,7 +39,7 @@ function ChatBox() {
     if (chatType === "ChatmDeBERTa") {
       window.location.href = "/chatmdeberta";
     } else if (chatType === "ChatWangchanBERTa") {
-      window.location.href = "/wangchanberta";
+      window.location.href = "/chatwangchanberta";
     }
   };
 
@@ -110,36 +106,6 @@ function ChatBox() {
   return (
     <div className="h-[100dvh] w-full overflow-hidden bg-primary flex p-4 justify-center items-center">
       <div className="w-full md:max-w-5xl max-w-4xl h-[95dvh] bg-secondary md:rounded-xl rounded-lg shadow-xl flex flex-col">
-        {/* <h1 className="text-center font-semibold text-secondaryLight mb-2 mt-3 text-lg h-16 flex items-center justify-center">
-          {isLoading ? 
-            <h1 className="text-lightPurple">Loading...</h1>
-          ) : (
-            "ChatmDeBERTa"
-          )}
-        </h1> */}
-        {/* <div className="flex justify-center items-center">
-          <button
-            className={`${
-              selectedChatType === "ChatmDeBERTa"
-                ? "bg-primaryLight text-white"
-                : "text-secondaryLight"
-            } font-semibold text-lg h-16 flex items-center justify-center p-2 mr-4 rounded-lg`}
-            onClick={() => handleChatTypeChange("ChatmDeBERTa")}
-          >
-            ChatmDeBERTa
-          </button>
-          <button
-            className={`${
-              selectedChatType === "ChatWangchanBERTa"
-                ? "bg-primaryLight text-white"
-                : "text-secondaryLight"
-            } font-semibold text-lg h-16 flex items-center justify-center p-2 rounded-lg`}
-            onClick={() => handleChatTypeChange("ChatWangchanBERTa")}
-          >
-            ChatWangchanBERTa
-          </button>
-        </div>
-        <div className="h-[2px] bg-primary border-0 w-full shadow-xl" /> */}
         <Navbar
           selectedChatType={selectedChatType}
           handleChatTypeChange={handleChatTypeChange}
@@ -184,15 +150,7 @@ function ChatBox() {
         </div>
       </div>
 
-      <div className="w-full max-w-5xl ml-1 h-[95dvh] bg-secondary md:rounded-xl shadow-xl overflow-auto vertical-scrollbar flex-1">
-        <h1 className="text-center text-secondaryLight text-lg h-16 flex items-center justify-center">
-          คู่ถาม-ตอบ
-        </h1>
-        <div className="h-[2px] bg-primary border-0 w-full shadow-xl" />
-        {botResponses.map((response, index) => (
-          <BotContextInfo key={index} response={response} />
-        ))}
-      </div>
+      <TopResponsesSection botResponses={botResponses} />
     </div>
   );
 }
