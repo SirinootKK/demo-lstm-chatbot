@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
-import { Input } from "@material-tailwind/react";
-import SendIcon from "@mui/icons-material/Send";
+import ChatInputForm from "./ChatInputForm.jsx";
 import ChatMessages from "./ChatMessages.jsx";
 import ExampleList from "./ExampleList.jsx";
 import TopResponsesSection from "./TopResponsesSection.jsx";
@@ -125,29 +124,12 @@ function WangchanBERTa() {
           handleScroll={handleScroll}
         />
 
-        <div className="h-28 w-full flex items-center bg pb-2">
-          <form
-            onSubmit={handleSubmit}
-            className="flex w-full h-fit relative px-6 md:px-12"
-          >
-            <Input
-              type="text"
-              value={userMessage}
-              className="w-full flex rounded-xl p-4 bg-primaryLight shadow-2xl text-white outline-none"
-              onChange={(e) => setUserMessage(e.target.value)}
-              placeholder={isLoading ? "Loading..." : "Send a message..."}
-              disabled={isLoading}
-            />
-
-            <button
-              type="submit"
-              className="z-20 w-fit h-fit text-secondaryLight absolute right-16 top-1/2 -translate-y-1/2"
-              disabled={isLoading}
-            >
-              {!isLoading ? <SendIcon fontSize="small" /> : null}
-            </button>
-          </form>
-        </div>
+        <ChatInputForm
+          userMessage={userMessage}
+          isLoading={isLoading}
+          onChange={(e) => setUserMessage(e.target.value)}
+          onSubmit={handleSubmit}
+        />
       </div>
 
       <TopResponsesSection botResponses={botResponses} />
