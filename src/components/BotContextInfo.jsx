@@ -1,14 +1,12 @@
 /* eslint-disable react/prop-types */
-// import { useEffect } from "react";
 function BotContextInfo({ response, selectedChatType }) {
   const contextProperty =
     selectedChatType === "ChatWangchanBERTa"
       ? "wc_similar_context"
       : "simitar_context";
 
-  // useEffect(() => {
-  //   console.log("selectedChatType in BotContextInfo:", selectedChatType);
-  // }, [selectedChatType]);
+  const disProps =
+    selectedChatType === "ChatWangchanBERTa" ? "wc_allDistance" : "allDistance";
 
   return (
     <div className="flex flex-col items-start px-[40px] py-1 text-white">
@@ -23,6 +21,12 @@ function BotContextInfo({ response, selectedChatType }) {
                 <span>{line}</span>
               </p>
             ))}
+            {/* แสดง disProps ที่ตรงกับ index เดียวกัน */}
+            {response[disProps][idx] && (
+              <div>
+                <span>confident = {response[disProps][idx]}</span>
+              </div>
+            )}
           </div>
         ))}
       {response[contextProperty] && (
