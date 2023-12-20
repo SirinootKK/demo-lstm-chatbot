@@ -3,7 +3,7 @@ function BotContextInfo({ response, selectedChatType }) {
   const contextProperty =
     selectedChatType === "ChatWangchanBERTa"
       ? "wc_similar_context"
-      : "simitar_context";
+      : "similar_context";
 
   const disProps =
     selectedChatType === "ChatWangchanBERTa" ? "wc_allDistance" : "allDistance";
@@ -21,7 +21,6 @@ function BotContextInfo({ response, selectedChatType }) {
                 <span>{line}</span>
               </p>
             ))}
-            {/* แสดง disProps ที่ตรงกับ index เดียวกัน */}
             {response[disProps][idx] && (
               <div>
                 <span>confident = {response[disProps][idx]}</span>

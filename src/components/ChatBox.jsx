@@ -110,9 +110,9 @@ function ChatBox() {
       const responseData = {
         message: data.response,
         isUserMessage: false,
-        simitar_context: data.simitar_context,
+        similar_context: data.simitar_context,
         distance: data.distance,
-        allDistance: data.distances,
+        allDistance: data.list_distance_for_show,
       };
 
       setContextResponses((prevResponses) => {
