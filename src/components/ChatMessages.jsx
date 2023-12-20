@@ -11,6 +11,9 @@ function ChatMessages({
     selectedChatType === "ChatmDeBERTa"
       ? "Welcome to ChatmDeBERTa"
       : "Welcome to ChatWangchanBERTa";
+
+  const distanceProperty =
+    selectedChatType === "ChatmDeBERTa" ? "distance" : "wc_distance";
   return (
     <div
       className="flex-grow overflow-auto vertical-scrollbar h-full"
@@ -38,8 +41,10 @@ function ChatMessages({
           <div className="px-4">
             {response.message}
             <div className="text-sm">
-              {response.distance && (
-                <p className="text-xs mt-1">confident = {response.distance}</p>
+              {(response?.distance ?? response?.wc_distance) && (
+                <p className="text-xs mt-1">
+                  confident = {response[distanceProperty]}
+                </p>
               )}
             </div>
           </div>

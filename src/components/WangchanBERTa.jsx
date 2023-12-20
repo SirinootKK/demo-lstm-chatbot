@@ -6,23 +6,41 @@ import ExampleList from "./ExampleList.jsx";
 import TopResponsesSection from "./TopResponsesSection.jsx";
 import Navbar from "./Navbar.jsx";
 
+const readSessionDataFromSession = () => {
+  const storedSessionData = sessionStorage.getItem("sessionData");
+
+  if (storedSessionData) {
+    const sessionData = JSON.parse(storedSessionData);
+
+    return sessionData;
+  }
+
+  return [];
+};
+
+const readResponseDataFromSession = () => {
+  const storedResponseData = sessionStorage.getItem("responseData");
+
+  if (storedResponseData) {
+    const responseData = JSON.parse(storedResponseData);
+
+    return responseData;
+  }
+
+  return [];
+};
+
 function WangchanBERTa() {
   const [userMessage, setUserMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [botResponses, setBotResponses] = useState([]);
+  const [botResponses, setBotResponses] = useState(() =>
+    readSessionDataFromSession()
+  );
+  const [contextResponses, setContextResponses] = useState(() =>
+    readResponseDataFromSession()
+  );
   const [selectedChatType, setSelectedChatType] = useState("ChatWangchanBERTa");
   const chatContainerRef = useRef(null);
-
-  const [examples] = useState([
-    "NCX ครอบคลุมแหล่งข้อมูลอะไรบ้าง",
-    "NCX ครอบคลุมแหล่งอะไร",
-    "ระบบไม่สามารถเข้าใช้งานได้",
-    "ระบบใช้งานไม่ได้",
-    "บริษัทฯ ให้บริการอะไรบ้าง",
-    "DXT360 มีข้อมูลจากแหล่งข้อมูลอะไรบ้าง",
-    "มีบริการฐานข้อมูลราคาพิเศษสำหรับนักศึกษาเพื่อใช้ทำวิจัยหรือไม่",
-    "Page Rank ของ Online Media คืออะไร",
-  ]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -66,10 +84,16 @@ function WangchanBERTa() {
 
     const apiEndpoint = "/api/get_response_wc";
 
-    setBotResponses((prevResponses) => [
-      ...prevResponses,
-      { message: userMessage, isUserMessage: true },
-    ]);
+    const sessionData = {
+      message: userMessage,
+      isUserMessage: true,
+    };
+
+    setBotResponses((prevResponses) => {
+      const currentData = [...prevResponses, sessionData];
+      sessionStorage.setItem("sessionData", JSON.stringify(currentData));
+      return currentData;
+    });
 
     try {
       const response = await fetch(apiEndpoint, {
@@ -82,18 +106,25 @@ function WangchanBERTa() {
       const data = await response.json();
 
       console.log("API Response:", data);
-      console.log("sim context", <data className="simitar_context"></data>);
 
-      setBotResponses((prevResponses) => [
-        ...prevResponses,
-        {
-          message: data.response,
-          isUserMessage: false,
-          simitar_context: data.simitar_context,
-          distance: data.distance,
-          allDistance: data.distances,
-        },
-      ]);
+      const responseData = {
+        message: data.wc_response,
+        isUserMessage: false,
+        wc_similar_context: data.wc_similar_context,
+        wc_distance: data.wc_distance,
+        wc_allDistance: data.wc_ls_dis,
+      };
+
+      setContextResponses((prevResponses) => {
+        const currentData = [...prevResponses, responseData];
+        sessionStorage.setItem("responseData", JSON.stringify(currentData));
+        return currentData;
+      });
+      setBotResponses((prevResponses) => {
+        const currentData = [...prevResponses, responseData];
+        sessionStorage.setItem("sessionData", JSON.stringify(currentData));
+        return currentData;
+      });
     } catch (error) {
       console.error("Error fetching response:", error);
       window.alert("Server error. Please try again later.");
@@ -118,7 +149,6 @@ function WangchanBERTa() {
         />
 
         <ExampleList
-          examples={examples}
           isLoading={isLoading}
           handleExampleClick={handleExampleClick}
           handleScroll={handleScroll}
@@ -132,7 +162,10 @@ function WangchanBERTa() {
         />
       </div>
 
-      <TopResponsesSection botResponses={botResponses} />
+      <TopResponsesSection
+        botResponses={contextResponses}
+        selectedChatType={selectedChatType}
+      />
     </div>
   );
 }
