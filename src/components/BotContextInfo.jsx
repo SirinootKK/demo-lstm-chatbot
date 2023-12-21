@@ -22,7 +22,7 @@ function BotContextInfo({ response, selectedChatType }) {
               </p>
             ))}
             {response[disProps][idx] && (
-              <div>
+              <div className="text-sm font-light">
                 <span>confident = {response[disProps][idx]}</span>
               </div>
             )}
