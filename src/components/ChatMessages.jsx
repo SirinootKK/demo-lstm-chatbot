@@ -41,11 +41,12 @@ function ChatMessages({
           <div className="px-4">
             {response.message}
             <div className="text-sm">
-              {(response?.distance ?? response?.wc_distance) && (
-                <p className="text-xs mt-1">
-                  confident = {response[distanceProperty]}
-                </p>
-              )}
+              {response &&
+                (response.distance > 0.49 || response.wc_distance > 0.49) && (
+                  <p className="text-xs mt-1">
+                    confident = {response[distanceProperty]}
+                  </p>
+                )}
             </div>
           </div>
         </div>
