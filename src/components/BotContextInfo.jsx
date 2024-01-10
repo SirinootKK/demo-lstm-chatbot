@@ -8,8 +8,15 @@ function BotContextInfo({ response, selectedChatType }) {
   const disProps =
     selectedChatType === "ChatWangchanBERTa" ? "wc_allDistance" : "allDistance";
 
-  const semanticContextProperty = "context_semantic_mde";
-  const semDistanceProperty = "info_distance";
+  const semanticContextProperty =
+    selectedChatType === "ChatWangchanBERTa"
+      ? "context_semantic_wc"
+      : "context_semantic_mde";
+
+  const semDistanceProperty =
+    selectedChatType === "ChatWangchanBERTa"
+      ? "info_distance_wc"
+      : "info_distance";
 
   return (
     <div className="flex flex-row">
