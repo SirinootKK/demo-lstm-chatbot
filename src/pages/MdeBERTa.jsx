@@ -1,13 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
-import ChatInputForm from "./ChatInputForm.jsx";
-import ChatMessages from "./ChatMessages.jsx";
-import ExampleList from "./ExampleList.jsx";
-import TopResponsesSection from "./TopResponsesSection.jsx";
-import Navbar from "./Navbar.jsx";
+import ChatInputForm from "../components/ChatInputForm.jsx";
+import ChatMessages from "../components/ChatMessages.jsx";
+import ExampleList from "../components/ExampleList.jsx";
+import TopResponsesSection from "../components/TopResponsesSection.jsx";
+import Navbar from "../components/Navbar.jsx";
 
 const readSessionDataFromSession = () => {
-  const storedSessionData = sessionStorage.getItem("sessionData");
+  const storedSessionData = sessionStorage.getItem("mde_sessionData");
 
   if (storedSessionData) {
     const sessionData = JSON.parse(storedSessionData);
@@ -19,7 +19,7 @@ const readSessionDataFromSession = () => {
 };
 
 const readResponseDataFromSession = () => {
-  const storedResponseData = sessionStorage.getItem("responseData");
+  const storedResponseData = sessionStorage.getItem("mde_responseData");
 
   if (storedResponseData) {
     const responseData = JSON.parse(storedResponseData);
@@ -30,7 +30,7 @@ const readResponseDataFromSession = () => {
   return [];
 };
 
-function WangchanBERTa() {
+function MdeBERTa() {
   const [userMessage, setUserMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [botResponses, setBotResponses] = useState(() =>
@@ -39,7 +39,7 @@ function WangchanBERTa() {
   const [contextResponses, setContextResponses] = useState(() =>
     readResponseDataFromSession()
   );
-  const [selectedChatType, setSelectedChatType] = useState("ChatWangchanBERTa");
+  const [selectedChatType, setSelectedChatType] = useState("ChatmDeBERTa");
   const chatContainerRef = useRef(null);
 
   useEffect(() => {
@@ -77,12 +77,70 @@ function WangchanBERTa() {
     setUserMessage(e);
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!userMessage) return;
+  //   setIsLoading(true);
+
+  //   const apiEndpoint = "/api/get_response_mde";
+
+  //   const sessionData = {
+  //     message: userMessage,
+  //     isUserMessage: true,
+  //   };
+
+  //   setBotResponses((prevResponses) => {
+  //     const currentData = [...prevResponses, sessionData];
+  //     sessionStorage.setItem("mde_sessionData", JSON.stringify(currentData));
+  //     return currentData;
+  //   });
+
+  //   try {
+  //     const response = await fetch(apiEndpoint, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ message: userMessage }),
+  //     });
+
+  //     const data = await response.json();
+
+  //     console.log("API Response:", data);
+
+  //     const responseData = {
+  //       message: data.response,
+  //       isUserMessage: false,
+  //       similar_context: data.simitar_context,
+  //       distance: data.distance,
+  //       allDistance: data.list_distance_for_show,
+  //     };
+
+  //     setContextResponses((prevResponses) => {
+  //       const currentData = [...prevResponses, responseData];
+  //       sessionStorage.setItem("mde_responseData", JSON.stringify(currentData));
+  //       return currentData;
+  //     });
+  //     setBotResponses((prevResponses) => {
+  //       const currentData = [...prevResponses, responseData];
+  //       sessionStorage.setItem("mde_sessionData", JSON.stringify(currentData));
+  //       return currentData;
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching response:", error);
+  //     window.alert("Server error. Please try again later.");
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userMessage) return;
     setIsLoading(true);
 
-    const apiEndpoint = "/api/get_response_wc";
+    const apiEndpoint = "/api/get_response_mde";
+    const apiSemanticEndpoint = "/api/get_semantic_mde";
 
     const sessionData = {
       message: userMessage,
@@ -91,7 +149,7 @@ function WangchanBERTa() {
 
     setBotResponses((prevResponses) => {
       const currentData = [...prevResponses, sessionData];
-      sessionStorage.setItem("sessionData", JSON.stringify(currentData));
+      sessionStorage.setItem("mde_sessionData", JSON.stringify(currentData));
       return currentData;
     });
 
@@ -103,26 +161,43 @@ function WangchanBERTa() {
         },
         body: JSON.stringify({ message: userMessage }),
       });
-      const data = await response.json();
 
-      console.log("API Response:", data);
+      const semanticResponse = await fetch(apiSemanticEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
+      const data = await response.json();
+      const semanticData = await semanticResponse.json();
+
+      console.log({ data });
+      console.log({ semanticData });
 
       const responseData = {
-        message: data.wc_response,
         isUserMessage: false,
-        wc_similar_context: data.wc_similar_context,
-        wc_distance: data.wc_distance,
-        wc_allDistance: data.wc_ls_dis,
+        message: data.response,
+        similar_context: data.simitar_context,
+        distance: data.distance,
+        allDistance: data.list_distance_for_show,
+
+        semantic_answer: semanticData.semantic_mde,
+        score: semanticData.score,
+        context: semanticData.similar_context,
+        semDistance: semanticData.info_distance,
       };
 
       setContextResponses((prevResponses) => {
         const currentData = [...prevResponses, responseData];
-        sessionStorage.setItem("responseData", JSON.stringify(currentData));
+        sessionStorage.setItem("mde_responseData", JSON.stringify(currentData));
         return currentData;
       });
+
       setBotResponses((prevResponses) => {
         const currentData = [...prevResponses, responseData];
-        sessionStorage.setItem("sessionData", JSON.stringify(currentData));
+        sessionStorage.setItem("mde_sessionData", JSON.stringify(currentData));
         return currentData;
       });
     } catch (error) {
@@ -170,4 +245,4 @@ function WangchanBERTa() {
   );
 }
 
-export default WangchanBERTa;
+export default MdeBERTa;

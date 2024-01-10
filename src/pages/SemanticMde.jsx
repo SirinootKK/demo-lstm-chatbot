@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef } from "react";
-import ChatInputForm from "./ChatInputForm.jsx";
-import ChatMessages from "./ChatMessages.jsx";
-import ExampleList from "./ExampleList.jsx";
-import TopResponsesSection from "./TopResponsesSection.jsx";
-import Navbar from "./Navbar.jsx";
+import ChatInputForm from "../components/ChatInputForm.jsx";
+import ChatMessages from "../components/ChatMessages.jsx";
+import ExampleList from "../components/ExampleList.jsx";
+import TopResponsesSection from "../components/TopResponsesSection.jsx";
+import Navbar from "../components/Navbar.jsx";
 
 const readSessionDataFromSession = () => {
   const storedSessionData = sessionStorage.getItem("mde_sessionData");
@@ -30,7 +30,7 @@ const readResponseDataFromSession = () => {
   return [];
 };
 
-function ChatBox() {
+function MdeBERTa() {
   const [userMessage, setUserMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [botResponses, setBotResponses] = useState(() =>
@@ -54,9 +54,9 @@ function ChatBox() {
     setSelectedChatType(chatType);
 
     if (chatType === "ChatmDeBERTa") {
-      window.location.href = "/chatmdeberta";
+      window.location.href = "/doc2vec/chatmdeberta";
     } else if (chatType === "ChatWangchanBERTa") {
-      window.location.href = "/chatwangchanberta";
+      window.location.href = "/doc2vec/chatwangchanberta";
     }
   };
 
@@ -170,4 +170,4 @@ function ChatBox() {
   );
 }
 
-export default ChatBox;
+export default MdeBERTa;

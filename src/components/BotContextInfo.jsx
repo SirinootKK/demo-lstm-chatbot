@@ -8,29 +8,57 @@ function BotContextInfo({ response, selectedChatType }) {
   const disProps =
     selectedChatType === "ChatWangchanBERTa" ? "wc_allDistance" : "allDistance";
 
+  const semanticContextProperty = "context";
+  const semDistanceProperty = "semDistance";
+
   return (
-    <div className="flex flex-col items-start px-[40px] py-1 text-white">
-      {response[contextProperty] &&
-        response[contextProperty].map((item, idx) => (
-          <div
-            key={idx}
-            className={`pt-2 ${item.includes("          ") ? "mb-2" : ""}`}
-          >
-            {item.split(/\s{2,}/).map((line, i) => (
-              <p key={i}>
-                <span>{line}</span>
-              </p>
-            ))}
-            {response[disProps][idx] && (
-              <div className="text-sm font-light">
-                <span>confident = {response[disProps][idx]}</span>
-              </div>
-            )}
-          </div>
-        ))}
-      {response[contextProperty] && (
-        <div className="h-[1px] bg-white border-0 w-full shadow-xl" />
-      )}
+    <div className="flex flex-row">
+      <div className="p-4 mb-2 flex-1">
+        <h2 className="text-lg font-semibold mb-2 text-white">
+          Context Information:
+        </h2>
+        {response[contextProperty] &&
+          response[contextProperty].map((item, idx) => (
+            <div
+              key={idx}
+              className={`pt-2 ${item.includes("          ") ? "mb-2" : ""}`}
+            >
+              {item.split(/\s{2,}/).map((line, i) => (
+                <p key={i}>
+                  <span>{line}</span>
+                </p>
+              ))}
+              {response[disProps][idx] && (
+                <div className="text-sm font-light">
+                  <span>confident = {response[disProps][idx]}</span>
+                </div>
+              )}
+            </div>
+          ))}
+      </div>
+      <div className="p-4 flex-1 ml-2">
+        <h2 className="text-lg font-semibold mb-2 text-white">
+          Semantic Information:
+        </h2>
+        {response[semanticContextProperty] &&
+          response[semanticContextProperty].map((item, idx) => (
+            <div
+              key={idx}
+              className={`pt-2 ${item.includes("          ") ? "mb-2" : ""}`}
+            >
+              {item.split(/\s{2,}/).map((line, i) => (
+                <p key={i}>
+                  <span>{line}</span>
+                </p>
+              ))}
+              {response[semDistanceProperty][idx] && (
+                <div className="text-sm font-light">
+                  <span>confident = {response[semDistanceProperty][idx]}</span>
+                </div>
+              )}
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

@@ -14,6 +14,7 @@ function ChatMessages({
 
   const distanceProperty =
     selectedChatType === "ChatmDeBERTa" ? "distance" : "wc_distance";
+
   return (
     <div
       className="flex-grow overflow-auto vertical-scrollbar h-full"
@@ -41,12 +42,35 @@ function ChatMessages({
           <div className="px-4">
             {response.message}
             <div className="text-sm">
-              {response &&
-                (response.distance > 0.49 || response.wc_distance > 0.49) && (
-                  <p className="text-xs mt-1">
-                    confident = {response[distanceProperty]}
-                  </p>
-                )}
+              {response.isUserMessage ? (
+                ""
+              ) : (
+                <>
+                  {response &&
+                    (response.distance > 0.49 ||
+                      response.wc_distance > 0.49) && (
+                      <p className="text-xs mt-1">
+                        confident = {response[distanceProperty]}
+                      </p>
+                    )}
+                  {/* Display semantic data */}
+                  {response.semantic_answer && (
+                    <>
+                      <p className="text-sm font-semibold text-secondaryLight mt-3">
+                        Semantic Answer
+                      </p>
+                      <p className="text-sm mt-1">{response.semantic_answer}</p>
+                      <p className="text-xs mt-1">Score: {response.score}</p>
+                      {/* <p className="text-xs mt-1">
+                        Context: {response.context}
+                      </p>
+                      <p className="text-xs mt-1">
+                        Semantic Distance: {response.semDistance}
+                      </p> */}
+                    </>
+                  )}
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -54,4 +78,5 @@ function ChatMessages({
     </div>
   );
 }
+
 export default ChatMessages;
