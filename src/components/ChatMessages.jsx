@@ -15,6 +15,12 @@ function ChatMessages({
   const distanceProperty =
     selectedChatType === "ChatmDeBERTa" ? "distance" : "wc_distance";
 
+  const semanticAnswerProperty =
+    selectedChatType === "ChatmDeBERTa" ? "semantic_mde" : "semantic_wc";
+
+  const semanticScoreProperty =
+    selectedChatType === "ChatmDeBERTa" ? "score" : "score_wc";
+
   return (
     <div
       className="flex-grow overflow-auto vertical-scrollbar h-full"
@@ -30,7 +36,7 @@ function ChatMessages({
       {botResponses.map((response, index) => (
         <div
           key={index}
-          className={`flex flex-row md:items-center space-x-2 px-[40px] md:px-[72px] py-6 text-white ${
+          className={`flex flex-row md:items-center space-x-1 px-[40px] md:px-[72px] py-6 text-white ${
             response.isUserMessage ? "bg-secondary" : "bg-purple "
           }`}
         >
@@ -40,7 +46,17 @@ function ChatMessages({
             alt={response.isUserMessage ? "User" : "Bot"}
           />
           <div className="px-4">
-            {response.message}
+            {response.isUserMessage ? (
+              <div>{response.message}</div>
+            ) : (
+              <div>
+                <p className="text-sm font-semibold text-secondaryLight">
+                  doc2vec
+                </p>
+                {response.message}
+              </div>
+            )}
+
             <div className="text-sm">
               {response.isUserMessage ? (
                 ""
@@ -53,20 +69,17 @@ function ChatMessages({
                         confident = {response[distanceProperty]}
                       </p>
                     )}
-                  {/* Display semantic data */}
-                  {response.semantic_answer && (
+                  {response[semanticAnswerProperty] && (
                     <>
                       <p className="text-sm font-semibold text-secondaryLight mt-3">
-                        Semantic Answer
+                        sentence tranformer
                       </p>
-                      <p className="text-sm mt-1">{response.semantic_answer}</p>
-                      <p className="text-xs mt-1">Score: {response.score}</p>
-                      {/* <p className="text-xs mt-1">
-                        Context: {response.context}
+                      <p className="text-sm mt-1">
+                        {response[semanticAnswerProperty]}
                       </p>
                       <p className="text-xs mt-1">
-                        Semantic Distance: {response.semDistance}
-                      </p> */}
+                        Score: {response[semanticScoreProperty]}
+                      </p>
                     </>
                   )}
                 </>

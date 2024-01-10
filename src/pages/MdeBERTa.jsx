@@ -77,63 +77,6 @@ function MdeBERTa() {
     setUserMessage(e);
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!userMessage) return;
-  //   setIsLoading(true);
-
-  //   const apiEndpoint = "/api/get_response_mde";
-
-  //   const sessionData = {
-  //     message: userMessage,
-  //     isUserMessage: true,
-  //   };
-
-  //   setBotResponses((prevResponses) => {
-  //     const currentData = [...prevResponses, sessionData];
-  //     sessionStorage.setItem("mde_sessionData", JSON.stringify(currentData));
-  //     return currentData;
-  //   });
-
-  //   try {
-  //     const response = await fetch(apiEndpoint, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ message: userMessage }),
-  //     });
-
-  //     const data = await response.json();
-
-  //     console.log("API Response:", data);
-
-  //     const responseData = {
-  //       message: data.response,
-  //       isUserMessage: false,
-  //       similar_context: data.simitar_context,
-  //       distance: data.distance,
-  //       allDistance: data.list_distance_for_show,
-  //     };
-
-  //     setContextResponses((prevResponses) => {
-  //       const currentData = [...prevResponses, responseData];
-  //       sessionStorage.setItem("mde_responseData", JSON.stringify(currentData));
-  //       return currentData;
-  //     });
-  //     setBotResponses((prevResponses) => {
-  //       const currentData = [...prevResponses, responseData];
-  //       sessionStorage.setItem("mde_sessionData", JSON.stringify(currentData));
-  //       return currentData;
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching response:", error);
-  //     window.alert("Server error. Please try again later.");
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userMessage) return;
@@ -183,10 +126,10 @@ function MdeBERTa() {
         distance: data.distance,
         allDistance: data.list_distance_for_show,
 
-        semantic_answer: semanticData.semantic_mde,
+        semantic_mde: semanticData.semantic_mde,
         score: semanticData.score,
-        context: semanticData.similar_context,
-        semDistance: semanticData.info_distance,
+        context_semantic_mde: semanticData.context_semantic_mde,
+        info_distance: semanticData.info_distance,
       };
 
       setContextResponses((prevResponses) => {
@@ -210,7 +153,7 @@ function MdeBERTa() {
 
   return (
     <div className="h-[100dvh] w-full overflow-hidden bg-primary flex p-4 justify-center items-center">
-      <div className="w-full md:max-w-5xl max-w-4xl h-[95dvh] bg-secondary md:rounded-xl rounded-lg shadow-xl flex flex-col">
+      <div className="w-full md:max-w-3xl h-[95dvh] bg-secondary md:rounded-xl rounded-lg shadow-xl flex flex-col">
         <Navbar
           selectedChatType={selectedChatType}
           handleChatTypeChange={handleChatTypeChange}

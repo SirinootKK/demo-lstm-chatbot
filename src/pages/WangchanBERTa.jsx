@@ -83,6 +83,7 @@ function WangchanBERTa() {
     setIsLoading(true);
 
     const apiEndpoint = "/api/get_response_wc";
+    const apiSemanticEndpoint = "/api/get_semantic_wc";
 
     const sessionData = {
       message: userMessage,
@@ -103,16 +104,31 @@ function WangchanBERTa() {
         },
         body: JSON.stringify({ message: userMessage }),
       });
+
+      const semanticResponse = await fetch(apiSemanticEndpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userMessage }),
+      });
+
       const data = await response.json();
+      const semanticData = await semanticResponse.json();
 
       console.log("API Response:", data);
 
       const responseData = {
-        message: data.wc_response,
         isUserMessage: false,
+        message: data.wc_response,
         wc_similar_context: data.wc_similar_context,
         wc_distance: data.wc_distance,
         wc_allDistance: data.wc_ls_dis,
+
+        semantic_wc: semanticData.semantic_wc,
+        score_wc: semanticData.score_wc,
+        context_semantic_wc: semanticData.context_semantic_wc,
+        info_distance_wc: semanticData.info_distance_wc,
       };
 
       setContextResponses((prevResponses) => {
@@ -135,7 +151,7 @@ function WangchanBERTa() {
 
   return (
     <div className="h-[100dvh] w-full overflow-hidden bg-primary flex p-4 justify-center items-center">
-      <div className="w-full md:max-w-5xl max-w-4xl h-[95dvh] bg-secondary md:rounded-xl rounded-lg shadow-xl flex flex-col">
+      <div className="w-full md:max-w-3xl h-[95dvh] bg-secondary md:rounded-xl rounded-lg shadow-xl flex flex-col">
         <Navbar
           selectedChatType={selectedChatType}
           handleChatTypeChange={handleChatTypeChange}

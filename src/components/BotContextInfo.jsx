@@ -8,15 +8,13 @@ function BotContextInfo({ response, selectedChatType }) {
   const disProps =
     selectedChatType === "ChatWangchanBERTa" ? "wc_allDistance" : "allDistance";
 
-  const semanticContextProperty = "context";
-  const semDistanceProperty = "semDistance";
+  const semanticContextProperty = "context_semantic_mde";
+  const semDistanceProperty = "info_distance";
 
   return (
     <div className="flex flex-row">
-      <div className="p-4 mb-2 flex-1">
-        <h2 className="text-lg font-semibold mb-2 text-white">
-          Context Information:
-        </h2>
+      <div className="p-4 mb-2 flex-1 text-white">
+        <h2 className="text-lg font-semibold mb-2 ">doc2vec</h2>
         {response[contextProperty] &&
           response[contextProperty].map((item, idx) => (
             <div
@@ -36,10 +34,8 @@ function BotContextInfo({ response, selectedChatType }) {
             </div>
           ))}
       </div>
-      <div className="p-4 flex-1 ml-2">
-        <h2 className="text-lg font-semibold mb-2 text-white">
-          Semantic Information:
-        </h2>
+      <div className="p-4 flex-1 ml-2 text-white">
+        <h2 className="text-lg font-semibold mb-2 ">sentence tranformer</h2>
         {response[semanticContextProperty] &&
           response[semanticContextProperty].map((item, idx) => (
             <div
