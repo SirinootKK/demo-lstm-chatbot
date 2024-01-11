@@ -74,7 +74,7 @@ function ChatMessages({
                       <p className="text-sm font-semibold text-secondaryLight mt-3">
                         sentence tranformer
                       </p>
-                      <p className="text-sm mt-1">
+                      <p className="text-base mt-1">
                         {response[semanticAnswerProperty]}
                       </p>
                       <p className="text-xs mt-1">
