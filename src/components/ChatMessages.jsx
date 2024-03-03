@@ -15,11 +15,17 @@ function ChatMessages({
   const distanceProperty =
     selectedChatType === "ChatmDeBERTa" ? "distance" : "wc_distance";
 
-  const semanticAnswerProperty =
+  const bertembeddedAnswerProperty =
     selectedChatType === "ChatmDeBERTa" ? "semantic_mde" : "semantic_wc";
 
-  const semanticScoreProperty =
+  const bertembeddedScoreProperty =
     selectedChatType === "ChatmDeBERTa" ? "score" : "score_wc";
+
+  const bertembeddedStartIndexProperty =
+    selectedChatType === "ChatmDeBERTa" ? "start_index_mde" : "start_index_wc";
+
+  const bertembeddedEndIndexProperty =
+    selectedChatType === "ChatmDeBERTa" ? "end_index_mde" : "end_index_wc";
 
   return (
     <div
@@ -69,16 +75,28 @@ function ChatMessages({
                         confident = {response[distanceProperty]}
                       </p>
                     )}
-                  {response[semanticAnswerProperty] && (
+                  {response[bertembeddedAnswerProperty] && (
                     <>
                       <p className="text-sm font-semibold text-secondaryLight mt-3">
                         sentence tranformer
                       </p>
                       <p className="text-base mt-1">
-                        {response[semanticAnswerProperty]}
+                        {response[bertembeddedAnswerProperty].substring(
+                          0,
+                          response[bertembeddedStartIndexProperty]
+                        )}
+                        <mark>
+                          {response[bertembeddedAnswerProperty].substring(
+                            response[bertembeddedStartIndexProperty],
+                            response[bertembeddedEndIndexProperty] + 1
+                          )}
+                        </mark>
+                        {response[bertembeddedAnswerProperty].substring(
+                          response[bertembeddedEndIndexProperty] + 1
+                        )}
                       </p>
                       <p className="text-xs mt-1">
-                        Score: {response[semanticScoreProperty]}
+                        confident: {response[bertembeddedScoreProperty]}
                       </p>
                     </>
                   )}

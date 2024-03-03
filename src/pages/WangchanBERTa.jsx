@@ -129,6 +129,8 @@ function WangchanBERTa() {
         score_wc: semanticData.score_wc,
         context_semantic_wc: semanticData.context_semantic_wc,
         info_distance_wc: semanticData.info_distance_wc,
+        start_index_wc: semanticData.start_index,
+        end_index_wc: semanticData.end_index,
       };
 
       setContextResponses((prevResponses) => {

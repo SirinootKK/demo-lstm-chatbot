@@ -130,6 +130,8 @@ function MdeBERTa() {
         score: semanticData.score,
         context_semantic_mde: semanticData.context_semantic_mde,
         info_distance: semanticData.info_distance,
+        start_index_mde: semanticData.start_index,
+        end_index_mde: semanticData.end_index,
       };
 
       setContextResponses((prevResponses) => {
