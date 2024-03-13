@@ -82,8 +82,8 @@ function MdeBERTa() {
     if (!userMessage) return;
     setIsLoading(true);
 
-    const apiEndpoint = "/api/get_response_mde";
-    const apiSemanticEndpoint = "/api/get_semantic_mde";
+    const apiEndpoint = "https://t1.dataxet.co/api/get_response_mde";
+    const apiSemanticEndpoint = "https://t1.dataxet.co/api/get_semantic_mde";
 
     const sessionData = {
       message: userMessage,

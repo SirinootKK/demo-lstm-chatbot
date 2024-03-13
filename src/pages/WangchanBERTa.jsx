@@ -82,8 +82,8 @@ function WangchanBERTa() {
     if (!userMessage) return;
     setIsLoading(true);
 
-    const apiEndpoint = "/api/get_response_wc";
-    const apiSemanticEndpoint = "/api/get_semantic_wc";
+    const apiEndpoint = "https://t1.dataxet.co/api/get_response_wc";
+    const apiSemanticEndpoint = "https://t1.dataxet.co/api/get_semantic_wc";
 
     const sessionData = {
       message: userMessage,
